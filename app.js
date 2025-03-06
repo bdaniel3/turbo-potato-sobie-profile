@@ -1,5 +1,13 @@
+require('dotenv').config();
+console.log("MONGO_URI: from .env:", process.env.MONGO_URI);
+if (!process.env.MONGO_URI) {
+  throw new Error("MONGO_URI is not being read from the.env file");
+}
 const express = require('express')
-require('dotenv').config()
+//require('dotenv').config()
+
+console.log("MONGO_URI: from .env:", process.env.MONGO_URI);
+
 const shajs = require('sha.js')
 const app = express()
 const port = process.env.PORT || 3000;  
@@ -7,6 +15,12 @@ const bodyParser = require('body-parser')
 const { ObjectId } = require('mongodb')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.MONGO_URI;
+
+if (!uri) {
+  throw new Error("MONGO_URI is not in the .env file");
+}
+
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true})); 
