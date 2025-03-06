@@ -1,65 +1,121 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Brittney Sobie Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
+  <title>Brittney Daniel's Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Normalize & Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles/style.css">
-
 </head>
+
 <body>
-
-<main>
-
-    <form method="POST" action="insert/">
-        <input name="title">
-        <input name="post">
-        <button class="btn btn-primary" role="submit">new post</button>
-      </form>
-
-      
-    <% profileData.forEach(result=> { %>
-        <div class="col-md-8">
-        
-  
-      <form method="POST" action="update/">
-        <input name="updateTitle" value="<%= result.title %>">
-        <input name="updatePost" value="<%= result.post %>"> 
-        <input type="hidden" name="updateId" value="<%=result._id %>">
-        <button class="btn btn-primary" role="submit"><i class="bi bi-pencil"></i></button>
-      </form>
-      
-  
-  
-      <form method="POST" action="delete/">
-        <input type="hidden" name="deleteId" value="<%=result._id %>">
-        <button class="btn btn-primary" role="submit"><i class="bi bi-trash3"></i></button>
-      </form>
-  
-  
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Brittney's Profile</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/brittney-daniel-75b4a3267/"
+              target="_blank">Linkedin</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/bdaniel3" target="_blank">Github</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/bdaniel3/turbo-potato-sobie-profile"
+              target="_blank">Dev-item-Repo</a></li>
+        </ul>
+      </div>
     </div>
-      <% }); %>
+  </nav>
 
-</main>
+  <!-- Profile Section -->
+  <header class="text-center py-5">
+    <div class="container">
+      <img src="images/profile.jfif" class="rounded-circle shadow-lg mb-3" alt="Brittney's Profile" width="150">
+      <h1 class="fw-bold">Brittney Daniel</h1>
+      <p class="lead text-muted">Aspiring Tech Professional</p>
 
+      <!-- About Me Section -->
+      <div class="about-me text-center mt-4">
+        <h3>About Me</h3>
+        <p class="text-muted mx-auto" style="max-width: 600px;">
+          I am a senior at the University of North Alabama, pursuing a major in Computer Information Systems, with an
+          expected graduation date of May 2025. After a fulfilling six-year career as a dental assistant, I decided to
+          work towards a degree in Computer Information Systems.
 
-
-    
-<footer class="footer bg-body-tertiary text-center text-lg-start fixed-bottom">
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-      © 2024
-      <a class="text-body" href="https://mdbootstrap.com/">bc</a> |
-      <a href="https://gist.github.com/assets/22795694/d414efab-a80c-4b31-aeac-9636a0681f41" target="_blank">see my wireframe</a>
-      <!-- Copyright -->
+          My passion for learning, love for technology, and adaptability have driven my career change. I am eager to
+          apply my analytical skills and attention to detail in a new, dynamic environment. I am committed to mastering
+          new technologies and continuously expanding my knowledge base to stay ahead in the ever-evolving tech
+          landscape.
+        </p>
+      </div>
     </div>
+  </header>
+
+
+  <main class="container">
+    <!-- Blog Post Form -->
+    <div class="card shadow p-4 mb-4">
+      <h3 class="text-center">Create a New Post</h3>
+      <form method="POST" action="insert/">
+        <div class="mb-3">
+          <input type="text" name="title" class="form-control" placeholder="Post Title" required>
+        </div>
+        <div class="mb-3">
+          <textarea name="post" class="form-control" rows="3" placeholder="Write your post here..." required></textarea>
+        </div>
+        <button class="btn btn-primary w-100" role="submit">Add Post</button>
+      </form>
+    </div>
+
+    <!-- Posts List -->
+    <section>
+      <h2 class="text-center mb-4">Recent Posts</h2>
+      <% profileData.forEach(result=> { %>
+        <div class="card shadow-sm mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= result.title %>
+            </h5>
+            <p class="card-text">
+              <%= result.post %>
+            </p>
+
+            <div class="d-flex justify-content-between">
+              <!-- Update Form -->
+              <form method="POST" action="update/" class="d-inline-block">
+                <input type="hidden" name="updateId" value="<%= result._id %>">
+                <input type="text" name="updateTitle" value="<%= result.title %>" class="form-control mb-2">
+                <textarea name="updatePost" class="form-control mb-2"><%= result.post %></textarea>
+                <button class="btn btn-sm btn-warning" role="submit"><i class="bi bi-pencil"></i> Edit</button>
+              </form>
+
+              <!-- Delete Form -->
+              <form method="POST" action="delete/" class="d-inline-block">
+                <input type="hidden" name="deleteId" value="<%= result._id %>">
+                <button class="btn btn-sm btn-danger" role="submit"><i class="bi bi-trash3"></i> Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer bg-light text-center py-3 mt-4">
+    <p>© 2025 Brittney Daniel | <a href="https://github.com/bdaniel3" target="_blank">See my Github</a></p>
   </footer>
-  
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js'></script>
-    <script  src="scripts/script.js"></script>
-  
-  </body>
-  </html>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+  <script src="scripts/script.js"></script>
+</body>
+
+</html>
